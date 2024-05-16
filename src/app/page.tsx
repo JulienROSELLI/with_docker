@@ -1,10 +1,18 @@
 import Image from "next/image";
 
-export default function Home() {
+import { addTasks } from "@/actions/actions";
+import prisma from "@/lib/db";
+
+export default async function Home() {
+  const tasks = await prisma.task.findMany();
+  console.log(tasks);
+
   return (
     <main className='flex min-h-screen flex-col items-center justify-between p-24'>
-      <h1>Hello</h1>
-      <p>just testing</p>
+      <form action={addTasks}>
+        <input type='text' name='title' />
+        <button type='submit'>Add</button>
+      </form>
     </main>
   );
 }

@@ -1,6 +1,6 @@
 # docker-postgreql-next proof of concept
 
-## setting up
+## setting up for dev env
 
 ```shell
 pnpm create next-app <name>
@@ -26,6 +26,9 @@ EXPOSE 3000
 CMD ["pnpm", "dev"]
 ```
 
+</details>
+
+<details>
 <summary><code>compose.yaml</code></summary>
 
 ```yaml
@@ -39,6 +42,17 @@ services:
     environment:
       - NODE_ENV=development
     command: pnpm dev
+    develop:
+      watch:
+        - action: sync
+          path: ./src
+          target: /app/src
+          ignore:
+            - node_modules/
+        - action: rebuild
+          path: package.json
 ```
 
 </details>
+
+
